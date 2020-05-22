@@ -1,20 +1,21 @@
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
 
 from todolist.models import TodoItem
-from django.http import JsonResponse, HttpResponse
 
 # Create your views here.
 from todolist.serializers import TodoItemSerializer
 
 
-@csrf_exempt
-def todo_list(request):
+@api_view(['GET', 'POST'])
+def todo_list(request, format=None):
 
     if request.method == 'GET':
         todo_items = TodoItem.objects.all()
         serializer = TodoItemSerializer(todo_items, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
@@ -28,22 +29,22 @@ def todo_list(request):
         serializer = TodoItemSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
-def todo_detail(request, pk):
+@api_view(['GET', 'DELETE'])
+def todo_detail(request, pk, format=None):
 
     try:
         todo_item = TodoItem.objects.get(pk=pk)
     except TodoItem.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = TodoItemSerializer(todo_item)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
         todo_item.delete()
-        return HttpResponse(status=204)
+        return Response(status=status.HTTP_204_NO_CONTENT)
