@@ -14,7 +14,7 @@ def todo_list(request):
     if request.method == 'GET':
         todo_items = TodoItem.objects.all()
         serializer = TodoItemSerializer(todo_items, many=True)
-        return JsonResponse(serializer.data)
+        return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
@@ -24,6 +24,7 @@ def todo_list(request):
         else:
             ip = request.META.get('REMOTE_ADDR')
         data["author_ip"] = ip
+        print(ip)
         serializer = TodoItemSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

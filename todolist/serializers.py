@@ -5,7 +5,7 @@ from rest_framework import serializers
 from todolist.models import TodoItem
 
 
-class TodoItemSerializer(serializers.Serializer):
+class TodoItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TodoItem
         fields = '__all__'
@@ -14,12 +14,11 @@ class TodoItemSerializer(serializers.Serializer):
         return TodoItem.objects.create(**validated_data)
 
     def validate(self, data):
-        if data["done"]:
-            print(data["done"])
-            if not data["done_date"]:
+        if data.get("done"):
+            if not data.get("done_date"):
                 data["done_date"] = date.today()
         else:
-            if data["done_date"]:
+            if data.get("done_date"):
                 raise serializers.ValidationError("You cannot assign done_date if done is False")
         return data
 
