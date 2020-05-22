@@ -13,7 +13,7 @@ def todo_list(request):
 
     if request.method == 'GET':
         todo_items = TodoItem.objects.all()
-        serializer = TodoItemSerializer(todo_items)
+        serializer = TodoItemSerializer(todo_items, many=True)
         return JsonResponse(serializer.data)
 
     elif request.method == 'POST':

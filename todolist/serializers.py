@@ -13,12 +13,13 @@ class TodoItemSerializer(serializers.Serializer):
     def create(self, validated_data):
         return TodoItem.objects.create(**validated_data)
 
-    def validate_done_date(self):
-        dd = self.initial_data
-        if dd["done"]:
-            if not dd["done_date"]:
-                dd["done_date"] = date.today()
+    def validate(self, data):
+        if data["done"]:
+            print(data["done"])
+            if not data["done_date"]:
+                data["done_date"] = date.today()
         else:
-            if dd.done_date:
+            if data["done_date"]:
                 raise serializers.ValidationError("You cannot assign done_date if done is False")
+        return data
 
