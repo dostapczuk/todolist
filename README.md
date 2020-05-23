@@ -31,7 +31,7 @@ To create new todo item using API endpoint:
     {
       "title":"Title of todo item",
       "done": false/true # boolean checking if activity is completed
-      "done_date": #date of finishing activity
+      "done_date": # date of finished activity
     }
     
 To delete todo item using API endpoint:
