@@ -21,4 +21,3 @@ class TodoItemSerializer(serializers.ModelSerializer):
             if data.get("done_date"):
                 raise serializers.ValidationError("You cannot assign done_date if done is False")
         return data
-
