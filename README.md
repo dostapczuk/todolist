@@ -40,7 +40,7 @@ To list all todo items using API endpoint:
         "done_date": null
     },
     ]
-    status 201 OK
+    status 200 OK
 
 To check single todo item using API endpoint:
 
@@ -55,7 +55,7 @@ To check single todo item using API endpoint:
         "created_date": "2020-05-22T18:30:02.902418Z",
         "done_date": null   
     } 
-    status: 201 OK
+    status: 200 OK
 
 To create new todo item using API endpoint:
     
@@ -86,7 +86,7 @@ To create new todo item using API endpoint:
         "created_date": "2020-05-23T13:12:14.666081Z",
         "done_date": null
     }
-    status: 204 Created
+    status: 201 Created
     
 To delete todo item using API endpoint:
 
