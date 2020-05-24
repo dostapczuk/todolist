@@ -6,9 +6,9 @@ TodoList is a Django and Django Rest Framework based web app that lets the user 
 ### Pre-requirements
 Make sure you have Python 3.x installed as well as pip.
 ### Requirements
-To run app you need to install all requirements included in requirements.txt
+To run app you need to install all requirements by using this command:
 
-    pip install -r requirements.txt
+    pip install -e .
 
 
 ### Run server
